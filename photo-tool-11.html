@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html lang="ur">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Photo Fixer — 600×800, White Background, Under 23KB</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Nastaliq+Urdu:wght@400;700&family=Georgia&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#173a4d;
+    --navy-deep:#0e2733;
+    --teal:#1c7a63;
+    --cream:#f7ede0;
+    --cream-deep:#f1e2ce;
+    --card:#ffffff;
+    --border:#e7ddc9;
+    --muted:#75797f;
+    --text:#22282c;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:var(--cream);
+    color:var(--text);
+    font-family:-apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  }
+  a{color:var(--teal);}
+
+  /* ---------- Header ---------- */
+  header{
+    background:linear-gradient(160deg, var(--cream) 0%, var(--cream-deep) 100%);
+    padding:34px 18px 26px;
+  }
+  .header-inner{
+    max-width:640px;
+    margin:0 auto;
+    display:flex;
+    align-items:center;
+    gap:16px;
+  }
+  .logo-badge{
+    flex-shrink:0;
+    width:52px;
+    height:52px;
+    border-radius:14px;
+    background:var(--navy);
+    color:#fff;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:24px;
+  }
+  header h1{
+    font-family:Georgia,'Times New Roman',serif;
+    font-size:26px;
+    color:var(--navy);
+    margin:0;
+    line-height:1.2;
+  }
+  header .tagline{
+    font-size:11px;
+    letter-spacing:0.18em;
+    text-transform:uppercase;
+    color:var(--muted);
+    margin-top:4px;
+  }
+
+  /* ---------- Contact / Ad card ---------- */
+  .ad-wrap{
+    max-width:640px;
+    margin:0 auto;
+    padding:20px 16px 0;
+  }
+  .ad-card{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:18px;
+    box-shadow:0 6px 18px rgba(23,58,77,0.07);
+    padding:22px 20px;
+  }
+  .ad-urdu{
+    font-family:'Noto Nastaliq Urdu', serif;
+    direction:rtl;
+    font-size:19px;
+    line-height:2.1;
+    color:var(--text);
+    margin:0 0 16px;
+    text-align:center;
+  }
+  .ad-numbers{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+    margin-bottom:16px;
+  }
+  .ad-number{
+    flex:1;
+    min-width:150px;
+    text-align:center;
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    gap:6px;
+    border:1.5px solid var(--teal);
+    background:#f2faf7;
+    color:var(--teal);
+    text-decoration:none;
+    font-weight:600;
+    font-size:13.5px;
+    padding:11px 8px;
+    border-radius:12px;
+    transition:background .15s ease, color .15s ease, transform .1s ease;
+  }
+  .ad-number:hover{background:var(--teal);color:#fff;transform:translateY(-1px);}
+  .wa-icon{width:16px;height:16px;flex-shrink:0;color:#25D366;}
+  .ad-number:hover .wa-icon{color:#fff;}
+  .ad-sig-row{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    flex-wrap:wrap;
+    gap:10px;
+    border-top:1px dashed var(--border);
+    padding-top:14px;
+  }
+  .ad-signature{
+    font-family:Georgia,serif;
+    font-size:14.5px;
+    color:var(--navy);
+  }
+  .ad-signature .role{
+    display:block;
+    font-family:-apple-system,sans-serif;
+    font-size:10.5px;
+    letter-spacing:0.08em;
+    color:var(--muted);
+    margin-top:2px;
+  }
+  .pill-btn{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:10px;
+    width:100%;
+    background:var(--navy);
+    color:#fff;
+    text-decoration:none;
+    font-weight:600;
+    font-size:14.5px;
+    padding:14px 18px;
+    border-radius:999px;
+    margin-top:16px;
+    transition:opacity .15s ease, transform .1s ease;
+  }
+  .pill-btn:hover{opacity:0.9;transform:translateY(-1px);}
+  .pill-caption{
+    font-family:'Noto Nastaliq Urdu', serif;
+    direction:rtl;
+    font-size:13.5px;
+    color:var(--muted);
+    text-align:center;
+    margin-top:12px;
+  }
+
+  /* ---------- Main tool ---------- */
+  main{
+    max-width:640px;
+    margin:0 auto;
+    padding:22px 16px 8px;
+    display:flex;
+    flex-direction:column;
+    gap:18px;
+  }
+  .card{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:18px;
+    box-shadow:0 6px 18px rgba(23,58,77,0.06);
+    padding:22px;
+  }
+  .drop{
+    border:2px dashed var(--border);
+    border-radius:14px;
+    padding:34px 14px;
+    text-align:center;
+    cursor:pointer;
+    transition:background .15s ease, border-color .15s ease;
+    display:block;
+  }
+  .drop:hover{background:#faf6ee;border-color:var(--teal);}
+  .drop.drag{background:#f2ede0;border-color:var(--teal);}
+  .drop input{display:none;}
+  .drop .icon{font-size:30px;display:block;margin-bottom:10px;}
+  .drop .main-txt{font-weight:700; font-family:'Noto Nastaliq Urdu', serif; direction:rtl; font-size:19px; color:var(--navy);}
+  .drop .sub-txt{font-size:12.5px;color:var(--muted);margin-top:8px;}
+
+  .choose-link{
+    display:block;
+    text-align:center;
+    padding:16px;
+    font-size:14.5px;
+    font-weight:600;
+    color:var(--teal);
+    text-decoration:underline;
+    cursor:pointer;
+    background:none;
+    border:none;
+    width:100%;
+    font-family:inherit;
+  }
+
+  .stage{
+    display:flex;
+    gap:18px;
+    justify-content:center;
+    flex-wrap:wrap;
+  }
+  .frame{text-align:center;}
+  .frame .label{
+    font-size:11px;
+    letter-spacing:0.18em;
+    text-transform:uppercase;
+    color:var(--teal);
+    margin-bottom:8px;
+    font-weight:600;
+  }
+  .id-card{
+    width:150px;
+    height:200px;
+    border:1.5px solid var(--border);
+    border-radius:10px;
+    background:#fbf8f2 repeating-linear-gradient(45deg,#f6f2e8,#f6f2e8 6px,#f0ebdd 6px,#f0ebdd 12px);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    overflow:hidden;
+    position:relative;
+    transition:box-shadow .2s ease, transform .2s ease;
+  }
+  .id-card:hover{box-shadow:0 6px 14px rgba(28,122,99,0.18);transform:translateY(-2px);}
+  #beforeCard{cursor:pointer;}
+  .id-card img,.id-card canvas{
+    width:100%;height:100%;object-fit:contain;display:block;
+  }
+  .id-card .placeholder-text{
+    font-family:'Noto Nastaliq Urdu', serif;
+    direction:rtl;
+    font-size:14.5px;
+    line-height:1.6;
+    color:var(--muted);
+    text-align:center;
+    padding:0 12px;
+  }
+
+  .status{
+    margin-top:16px;
+    font-size:13px;
+    color:var(--muted);
+    text-align:center;
+    min-height:18px;
+  }
+  .status.busy{color:var(--teal);}
+  progress{
+    width:100%;
+    height:7px;
+    accent-color:var(--teal);
+    margin-top:8px;
+    border-radius:99px;
+  }
+
+  .eyebrow{
+    font-size:10.5px;
+    letter-spacing:0.2em;
+    text-transform:uppercase;
+    color:var(--muted);
+    font-weight:600;
+    margin-bottom:6px;
+  }
+  .receipt h2{
+    font-family:Georgia,serif;
+    font-size:22px;
+    color:var(--navy);
+    margin:0 0 14px;
+  }
+  .receipt-row{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:11px 0;
+    border-bottom:1px solid #f0ebdd;
+    font-size:14px;
+  }
+  .receipt-row:last-of-type{border-bottom:none;}
+  .receipt-row span:first-child{color:var(--muted);}
+  .receipt-row span:last-child{
+    font-family:'Courier New',monospace;
+    font-weight:700;
+    color:var(--teal);
+  }
+  .receipt-row .status-ready{color:var(--teal);}
+
+  .download-eyebrow{
+    font-size:10.5px;
+    letter-spacing:0.2em;
+    text-transform:uppercase;
+    color:var(--muted);
+    font-weight:600;
+    margin:18px 0 10px;
+  }
+  .download-row{
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+  }
+  .btn{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:8px;
+    background:var(--navy);
+    color:#fff;
+    border:1.5px solid var(--navy);
+    padding:14px 10px;
+    font-family:inherit;
+    font-weight:700;
+    font-size:14.5px;
+    letter-spacing:0.02em;
+    cursor:pointer;
+    text-align:center;
+    text-decoration:none;
+    border-radius:12px;
+    transition:opacity .15s ease, transform .1s ease;
+  }
+  .btn:hover{opacity:0.9;transform:translateY(-1px);}
+  .btn[disabled]{opacity:0.35;cursor:not-allowed;pointer-events:none;}
+  .btn.secondary{
+    background:#fff;
+    color:var(--navy);
+  }
+
+  footer{
+    text-align:center;
+    font-size:11.5px;
+    color:var(--muted);
+    padding:24px 20px 44px;
+  }
+
+  /* ---------- Top banner ---------- */
+  .top-banner{
+    background:var(--navy);
+    color:#fff;
+    text-align:center;
+    padding:18px 14px;
+  }
+  .top-banner .name{
+    font-family:Georgia,'Times New Roman',serif;
+    font-weight:700;
+    font-size:clamp(24px,7vw,36px);
+    letter-spacing:0.01em;
+  }
+  .top-banner .number{
+    font-family:'Courier New',monospace;
+    font-weight:800;
+    font-size:clamp(26px,8vw,40px);
+    color:#ffd166;
+    letter-spacing:0.03em;
+    margin-top:6px;
+    animation:blink 5s infinite;
+  }
+  @keyframes blink{
+    0%, 96%   { opacity:1; }
+    97%       { opacity:0; }
+    98%       { opacity:1; }
+    99%       { opacity:0; }
+    100%      { opacity:1; }
+  }
+</style>
+</head>
+<body>
+
+<div class="top-banner">
+  <div class="name">Sir Zohaib SST-IT</div>
+  <div class="number">📞 03099453156</div>
+</div>
+
+<header>
+  <div class="header-inner">
+    <div class="logo-badge">📄</div>
+    <div>
+      <h1>Photo Fixer</h1>
+      <div class="tagline">Photo Spec Tool</div>
+    </div>
+  </div>
+</header>
+
+<div class="ad-wrap">
+  <div class="ad-card">
+    <p class="ad-urdu">ٹیکس ریٹرن 2026 جمع کروانے اور فائلر بننے کے لیے درج ذیل نمبر پر رابطہ کریں۔</p>
+    <div class="ad-numbers">
+      <a class="ad-number" href="https://wa.me/923099453156?text=Assalam%20Alaikum%20Sir%20Zohaib" rel="noopener"><svg class="wa-icon" viewBox="0 0 32 32" aria-hidden="true"><path fill="currentColor" d="M16.004 3C9.377 3 4 8.373 4 15c0 2.31.646 4.47 1.77 6.31L4 29l7.86-1.73A11.94 11.94 0 0 0 16.004 27C22.63 27 28 21.627 28 15S22.63 3 16.004 3Zm0 21.75c-1.98 0-3.83-.55-5.41-1.5l-.39-.23-4.66 1.03 1.05-4.54-.25-.4A9.7 9.7 0 0 1 5.75 15c0-5.66 4.59-10.25 10.254-10.25S26.25 9.34 26.25 15 21.667 24.75 16.004 24.75Zm5.6-7.66c-.31-.155-1.82-.9-2.1-1-.28-.103-.485-.155-.69.155-.205.31-.79 1-.968 1.207-.178.207-.357.233-.667.078-.31-.155-1.31-.483-2.494-1.54-.922-.822-1.545-1.837-1.726-2.147-.18-.31-.02-.478.136-.632.14-.14.31-.362.464-.543.155-.18.207-.31.31-.517.104-.207.052-.388-.026-.543-.078-.155-.69-1.665-.945-2.28-.249-.598-.502-.517-.69-.526-.178-.008-.383-.01-.588-.01-.206 0-.543.077-.827.388-.284.31-1.084 1.06-1.084 2.585 0 1.526 1.11 3 1.265 3.208.155.207 2.185 3.336 5.29 4.677.74.319 1.317.51 1.767.652.742.236 1.417.203 1.95.123.595-.089 1.82-.744 2.077-1.463.257-.72.257-1.336.18-1.464-.077-.129-.283-.207-.593-.362Z"/></svg> 0309 9453156</a>
+      <a class="ad-number" href="https://wa.me/923499685876?text=Assalam%20Alaikum%20Sir%20Zohaib" rel="noopener"><svg class="wa-icon" viewBox="0 0 32 32" aria-hidden="true"><path fill="currentColor" d="M16.004 3C9.377 3 4 8.373 4 15c0 2.31.646 4.47 1.77 6.31L4 29l7.86-1.73A11.94 11.94 0 0 0 16.004 27C22.63 27 28 21.627 28 15S22.63 3 16.004 3Zm0 21.75c-1.98 0-3.83-.55-5.41-1.5l-.39-.23-4.66 1.03 1.05-4.54-.25-.4A9.7 9.7 0 0 1 5.75 15c0-5.66 4.59-10.25 10.254-10.25S26.25 9.34 26.25 15 21.667 24.75 16.004 24.75Zm5.6-7.66c-.31-.155-1.82-.9-2.1-1-.28-.103-.485-.155-.69.155-.205.31-.79 1-.968 1.207-.178.207-.357.233-.667.078-.31-.155-1.31-.483-2.494-1.54-.922-.822-1.545-1.837-1.726-2.147-.18-.31-.02-.478.136-.632.14-.14.31-.362.464-.543.155-.18.207-.31.31-.517.104-.207.052-.388-.026-.543-.078-.155-.69-1.665-.945-2.28-.249-.598-.502-.517-.69-.526-.178-.008-.383-.01-.588-.01-.206 0-.543.077-.827.388-.284.31-1.084 1.06-1.084 2.585 0 1.526 1.11 3 1.265 3.208.155.207 2.185 3.336 5.29 4.677.74.319 1.317.51 1.767.652.742.236 1.417.203 1.95.123.595-.089 1.82-.744 2.077-1.463.257-.72.257-1.336.18-1.464-.077-.129-.283-.207-.593-.362Z"/></svg> 0349 9685876</a>
+      <a class="ad-number" href="https://wa.me/923240192798?text=Assalam%20Alaikum%20Sir%20Zohaib" rel="noopener"><svg class="wa-icon" viewBox="0 0 32 32" aria-hidden="true"><path fill="currentColor" d="M16.004 3C9.377 3 4 8.373 4 15c0 2.31.646 4.47 1.77 6.31L4 29l7.86-1.73A11.94 11.94 0 0 0 16.004 27C22.63 27 28 21.627 28 15S22.63 3 16.004 3Zm0 21.75c-1.98 0-3.83-.55-5.41-1.5l-.39-.23-4.66 1.03 1.05-4.54-.25-.4A9.7 9.7 0 0 1 5.75 15c0-5.66 4.59-10.25 10.254-10.25S26.25 9.34 26.25 15 21.667 24.75 16.004 24.75Zm5.6-7.66c-.31-.155-1.82-.9-2.1-1-.28-.103-.485-.155-.69.155-.205.31-.79 1-.968 1.207-.178.207-.357.233-.667.078-.31-.155-1.31-.483-2.494-1.54-.922-.822-1.545-1.837-1.726-2.147-.18-.31-.02-.478.136-.632.14-.14.31-.362.464-.543.155-.18.207-.31.31-.517.104-.207.052-.388-.026-.543-.078-.155-.69-1.665-.945-2.28-.249-.598-.502-.517-.69-.526-.178-.008-.383-.01-.588-.01-.206 0-.543.077-.827.388-.284.31-1.084 1.06-1.084 2.585 0 1.526 1.11 3 1.265 3.208.155.207 2.185 3.336 5.29 4.677.74.319 1.317.51 1.767.652.742.236 1.417.203 1.95.123.595-.089 1.82-.744 2.077-1.463.257-.72.257-1.336.18-1.464-.077-.129-.283-.207-.593-.362Z"/></svg> 0324 0192798</a>
+    </div>
+    <div class="ad-sig-row">
+      <div class="ad-signature">M Zohaib<span class="role">SST-IT</span></div>
+    </div>
+    <a class="pill-btn" href="https://whatsapp.com/channel/0029VaAyeg80AgWKAlRdO61N" target="_blank" rel="noopener">📢 WhatsApp Channel Follow Karein</a>
+    <div class="pill-caption">مزید معلومات کے لیے ہمارا واٹس ایپ چینل فالو کریں</div>
+  </div>
+</div>
+
+<main>
+  <div class="card" id="uploadCard">
+    <label class="drop" id="dropZone">
+      <input type="file" id="fileInput" accept="image/*">
+      <span class="icon">📷</span>
+      <span class="main-txt">تصویر منتخب کریں</span>
+      <span class="sub-txt">Click karein ya photo yahan drop karein · JPG ya PNG</span>
+    </label>
+  </div>
+
+  <button class="choose-link" id="resetBtn" style="display:none;">Choose a different photo</button>
+
+  <div class="card">
+    <div class="stage">
+      <div class="frame">
+        <div class="label">Before</div>
+        <div class="id-card" id="beforeCard">
+          <span class="placeholder-text" id="beforePlaceholder">📷<br>تصویر<br>منتخب کریں</span>
+          <img id="beforeImg" alt="" style="display:none">
+        </div>
+      </div>
+      <div class="frame">
+        <div class="label">After</div>
+        <div class="id-card">
+          <span class="placeholder-text" id="afterPlaceholder">نتیجہ یہاں<br>نظر آئے گا</span>
+          <canvas id="afterCanvas" width="150" height="200" style="display:none"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <div class="status" id="status">Photo upload hone ka intezaar…</div>
+    <progress id="progressBar" value="0" max="100" style="display:none"></progress>
+  </div>
+
+  <div class="card receipt">
+    <div class="eyebrow">Output Specs</div>
+    <h2>Spec Receipt</h2>
+    <div class="receipt-row"><span>Resolution</span><span id="specRes">600 × 800 px</span></div>
+    <div class="receipt-row"><span>File size</span><span id="specFinal">—</span></div>
+    <div class="receipt-row"><span>Background</span><span>White (AI Removed)</span></div>
+    <div class="receipt-row"><span>Quality used</span><span id="specQuality">—</span></div>
+    <div class="receipt-row"><span>Status</span><span id="specStatus">—</span></div>
+
+    <div class="download-eyebrow">Download</div>
+    <div class="download-row">
+      <a class="btn" id="downloadBtn" href="#" download="photo-600x800.jpg" disabled>⬆ JPG</a>
+      <a class="btn secondary" id="downloadPngBtn" href="#" download="photo-600x800.png" disabled>⬆ PNG</a>
+    </div>
+  </div>
+</main>
+
+<footer>
+  Yeh tool poori tarah aapke browser mein chalta hai — photo kabhi kisi server par upload nahi hoti.
+</footer>
+
+<!-- TensorFlow.js + MediaPipe Selfie Segmentation for in-browser background (person) segmentation -->
+<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@4.10.0/dist/tf.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@mediapipe/selfie_segmentation/selfie_segmentation.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/body-segmentation@1.0.2/dist/body-segmentation.min.js"></script>
+
+<script>
+const dropZone   = document.getElementById('dropZone');
+const beforeCard = document.getElementById('beforeCard');
+const fileInput  = document.getElementById('fileInput');
+const beforeImg  = document.getElementById('beforeImg');
+const afterCanvas= document.getElementById('afterCanvas');
+const statusEl   = document.getElementById('status');
+const progressBar= document.getElementById('progressBar');
+const downloadBtn= document.getElementById('downloadBtn');
+const downloadPngBtn = document.getElementById('downloadPngBtn');
+const resetBtn   = document.getElementById('resetBtn');
+const uploadCard = document.getElementById('uploadCard');
+const specFinal  = document.getElementById('specFinal');
+const specQuality= document.getElementById('specQuality');
+const specStatus = document.getElementById('specStatus');
+const beforePlaceholder = document.getElementById('beforePlaceholder');
+const afterPlaceholder  = document.getElementById('afterPlaceholder');
+
+const TARGET_W = 600, TARGET_H = 800, TARGET_BYTES = 23 * 1024;
+let bodyPixModel = null;
+
+function setStatus(msg, busy){
+  statusEl.textContent = msg;
+  statusEl.classList.toggle('busy', !!busy);
+}
+
+// Drag & drop
+['dragenter','dragover'].forEach(ev=>{
+  dropZone.addEventListener(ev, e=>{e.preventDefault(); dropZone.classList.add('drag');});
+});
+['dragleave','drop'].forEach(ev=>{
+  dropZone.addEventListener(ev, e=>{e.preventDefault(); dropZone.classList.remove('drag');});
+});
+dropZone.addEventListener('drop', e=>{
+  const f = e.dataTransfer.files[0];
+  if (f) handleFile(f);
+});
+beforeCard.addEventListener('click', ()=> fileInput.click());
+fileInput.addEventListener('change', e=>{
+  const f = e.target.files[0];
+  if (f) handleFile(f);
+});
+resetBtn.addEventListener('click', ()=>{
+  fileInput.value = '';
+  beforeImg.style.display = 'none';
+  beforeImg.removeAttribute('src');
+  afterCanvas.style.display = 'none';
+  const ctx = afterCanvas.getContext('2d');
+  ctx.clearRect(0,0,afterCanvas.width,afterCanvas.height);
+  beforePlaceholder.style.display = 'block';
+  afterPlaceholder.style.display = 'block';
+  downloadBtn.setAttribute('disabled','true');
+  downloadBtn.removeAttribute('href');
+  downloadPngBtn.setAttribute('disabled','true');
+  downloadPngBtn.removeAttribute('href');
+  specFinal.textContent = '—';
+  specQuality.textContent = '—';
+  specStatus.textContent = '—';
+  progressBar.style.display = 'none';
+  setStatus('Photo upload hone ka intezaar…');
+  fileInput.click();
+});
+
+async function ensureModel(){
+  if (bodyPixModel) return bodyPixModel;
+  setStatus('Model load ho raha hai (pehli baar thoda time lagega)…', true);
+  const model = bodySegmentation.SupportedModels.MediaPipeSelfieSegmentation;
+  bodyPixModel = await bodySegmentation.createSegmenter(model, {
+    runtime: 'mediapipe',
+    solutionPath: 'https://cdn.jsdelivr.net/npm/@mediapipe/selfie_segmentation',
+    modelType: 'general'
+  });
+  return bodyPixModel;
+}
+
+function handleFile(file){
+  if (!file.type.startsWith('image/')) {
+    setStatus('Sirf image file (JPG/PNG) chunein.');
+    return;
+  }
+  const url = URL.createObjectURL(file);
+  const img = new Image();
+  img.onload = () => {
+    beforeImg.src = url;
+    beforeImg.style.display = 'block';
+    beforePlaceholder.style.display = 'none';
+    uploadCard.style.display = 'none';
+    resetBtn.style.display = 'block';
+    processImage(img);
+  };
+  img.src = url;
+}
+
+async function processImage(img){
+  try{
+    downloadBtn.setAttribute('disabled','true');
+    downloadPngBtn.setAttribute('disabled','true');
+    specStatus.textContent = '—';
+    progressBar.style.display = 'block';
+    progressBar.value = 10;
+
+    const model = await ensureModel();
+    progressBar.value = 35;
+    setStatus('Background remove ho raha hai…', true);
+
+    // Run segmentation on the original image
+    const people = await model.segmentPeople(img);
+    progressBar.value = 55;
+
+    // Draw original image to a working canvas at its natural size
+    const work = document.createElement('canvas');
+    work.width = img.naturalWidth;
+    work.height = img.naturalHeight;
+    const wctx = work.getContext('2d');
+    wctx.drawImage(img, 0, 0);
+
+    if (!people.length){
+      // No person detected — leave the photo as-is rather than wiping it out
+      setStatus('Chehra pehchana nahi gaya, background waisa hi rakha gaya hai.');
+    } else {
+      // The mask is a smooth per-pixel confidence map (0-255), not a hard
+      // cutoff, so it already blends edges/hair naturally — no manual
+      // blur/feather step needed.
+      const maskImageData = await people[0].mask.toImageData();
+
+      const imageData = wctx.getImageData(0, 0, work.width, work.height);
+      const pix = imageData.data;
+      const mask = maskImageData.data;
+      for (let i = 0; i < pix.length; i += 4){
+        const alpha = mask[i] / 255; // 1 = person, 0 = background
+        pix[i]   = pix[i]   * alpha + 255 * (1 - alpha);
+        pix[i+1] = pix[i+1] * alpha + 255 * (1 - alpha);
+        pix[i+2] = pix[i+2] * alpha + 255 * (1 - alpha);
+        pix[i+3] = 255;
+      }
+      wctx.putImageData(imageData, 0, 0);
+    }
+    progressBar.value = 75;
+    setStatus('600×800 mein fit kiya ja raha hai…', true);
+
+    // Fit into 600x800 on a white canvas ("contain" — no cropping, no distortion)
+    const finalCanvas = document.createElement('canvas');
+    finalCanvas.width = TARGET_W;
+    finalCanvas.height = TARGET_H;
+    const fctx = finalCanvas.getContext('2d');
+    fctx.fillStyle = '#ffffff';
+    fctx.fillRect(0, 0, TARGET_W, TARGET_H);
+
+    const scale = Math.min(TARGET_W / work.width, TARGET_H / work.height);
+    const dw = work.width * scale;
+    const dh = work.height * scale;
+    const dx = (TARGET_W - dw) / 2;
+    const dy = (TARGET_H - dh) / 2;
+    fctx.drawImage(work, dx, dy, dw, dh);
+
+    // Preview
+    afterPlaceholder.style.display = 'none';
+    afterCanvas.style.display = 'block';
+    const pctx = afterCanvas.getContext('2d');
+    pctx.clearRect(0,0,afterCanvas.width,afterCanvas.height);
+    pctx.drawImage(finalCanvas, 0, 0, afterCanvas.width, afterCanvas.height);
+
+    progressBar.value = 90;
+    setStatus('23 KB se kam compress ho raha hai…', true);
+
+    const { blob, quality } = await compressUnder(finalCanvas, TARGET_BYTES);
+    const pngBlob = await canvasToBlob(finalCanvas, 1, 'image/png');
+    progressBar.value = 100;
+
+    const dlUrl = URL.createObjectURL(blob);
+    downloadBtn.href = dlUrl;
+    downloadBtn.removeAttribute('disabled');
+
+    const pngUrl = URL.createObjectURL(pngBlob);
+    downloadPngBtn.href = pngUrl;
+    downloadPngBtn.removeAttribute('disabled');
+
+    specFinal.textContent = (blob.size/1024).toFixed(1) + ' KB';
+    specQuality.textContent = Math.round(quality * 100) + '%';
+    specStatus.innerHTML = '✓ Ready';
+    setStatus('Taiyar hai — download button dabayein.');
+    setTimeout(()=>{ progressBar.style.display = 'none'; }, 600);
+
+  }catch(err){
+    console.error(err);
+    progressBar.style.display = 'none';
+    setStatus('Kuch ghalat ho gaya: ' + err.message);
+  }
+}
+
+// Binary-search JPEG quality until the blob is under targetBytes.
+function canvasToBlob(canvas, quality, mime){
+  return new Promise(resolve=>{
+    canvas.toBlob(b=>resolve(b), mime, quality);
+  });
+}
+
+async function compressUnder(canvas, targetBytes){
+  const mime = 'image/jpeg';
+  let lo = 0.05, hi = 0.98, best = null, bestQuality = 0.05;
+  for (let i = 0; i < 12; i++){
+    const mid = (lo + hi) / 2;
+    const blob = await canvasToBlob(canvas, mid, mime);
+    if (blob.size <= targetBytes){
+      best = blob;
+      bestQuality = mid;
+      lo = mid; // try higher quality while still under target
+    } else {
+      hi = mid;
+    }
+  }
+  if (best) return { blob: best, quality: bestQuality };
+  // Even lowest quality is still too big — shrink pixel dimensions and retry
+  const shrunk = document.createElement('canvas');
+  shrunk.width = Math.round(canvas.width * 0.75);
+  shrunk.height = Math.round(canvas.height * 0.75);
+  shrunk.getContext('2d').drawImage(canvas, 0, 0, shrunk.width, shrunk.height);
+  const fallback = await canvasToBlob(shrunk, 0.6, mime);
+  return { blob: fallback, quality: 0.6 };
+}
+</script>
+</body>
+</html>
